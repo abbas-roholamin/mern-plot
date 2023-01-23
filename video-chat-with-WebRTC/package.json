@@ -1,0 +1,33 @@
+{
+  "name": "video-chat-with-webrtc",
+  "version": "1.0.0",
+  "description": "video chat application with WebRTC",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abbas-roholamin/mern-stack-blueprint.git"
+  },
+  "keywords": [
+    "video-chat",
+    "mern-stack",
+    "video-call"
+  ],
+  "author": "Abbas Roholamin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abbas-roholamin/mern-stack-blueprint/issues"
+  },
+  "homepage": "https://github.com/abbas-roholamin/mern-stack-blueprint#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
