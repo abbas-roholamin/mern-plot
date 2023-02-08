@@ -31,7 +31,7 @@ app.post('/api/v1/tours', (req, res) => {
   });
 });
 
-// Get A Tour
+// Get Tour
 app.get('/api/v1/tours/:id', (req, res) => {
   const { id } = req.params;
   const tour = tours.find((t) => t.id === Number(id));
@@ -41,6 +41,15 @@ app.get('/api/v1/tours/:id', (req, res) => {
   }
 
   res.status(200).json({ status: 'success', data: { tour } });
+});
+
+// Update Tour
+app.patch('/api/v1/tours/:id', (req, res) => {
+  if (Number(req.params.id) > tours.length) {
+    res.status(404).json({ status: 'Invalid ID' });
+  }
+
+  res.status(200).json({ status: 'success', data: { tour: 'PATCH' } });
 });
 
 const PORT = process.env.PORT || 5000;
