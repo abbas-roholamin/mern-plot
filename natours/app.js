@@ -52,6 +52,15 @@ app.patch('/api/v1/tours/:id', (req, res) => {
   res.status(200).json({ status: 'success', data: { tour: 'PATCH' } });
 });
 
+// Delete Tour
+app.delete('/api/v1/tours/:id', (req, res) => {
+  if (Number(req.params.id) > tours.length) {
+    res.status(404).json({ status: 'Invalid ID' });
+  }
+
+  res.status(204).json({ status: 'success', data: null });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, function () {
   console.log(`Server listening on ${PORT}`);
