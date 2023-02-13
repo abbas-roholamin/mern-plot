@@ -1,9 +1,12 @@
 const { json } = require('body-parser');
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan');
 const app = express();
 
+// Middleware
 app.use(express.json());
+app.use(morgan('dev'));
 
 const dataPath = `${__dirname}/dev-data/data/tours-simple.json`;
 const tours = JSON.parse(fs.readFileSync(dataPath));
