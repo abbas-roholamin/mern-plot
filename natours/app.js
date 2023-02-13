@@ -8,8 +8,8 @@ app.use(express.json());
 const dataPath = `${__dirname}/dev-data/data/tours-simple.json`;
 const tours = JSON.parse(fs.readFileSync(dataPath));
 
-// Get All Tours
-app.get('/api/v1/tours', (req, res) => {
+// Resolvers
+const getALlTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     length: tours.length,
@@ -17,10 +17,9 @@ app.get('/api/v1/tours', (req, res) => {
       tours,
     },
   });
-});
+};
 
-// Add New Tour
-app.post('/api/v1/tours', (req, res) => {
+const createTour = (req, res) => {
   const id = tours[tours.length - 1].id + 1;
   const newTour = { id, ...req.body };
   tours.push(newTour);
@@ -29,10 +28,9 @@ app.post('/api/v1/tours', (req, res) => {
       .status(201)
       .json({ status: 'success', length: tours.length, data: newTour });
   });
-});
+};
 
-// Get Tour
-app.get('/api/v1/tours/:id', (req, res) => {
+const getTour = (req, res) => {
   const { id } = req.params;
   const tour = tours.find((t) => t.id === Number(id));
 
@@ -41,26 +39,40 @@ app.get('/api/v1/tours/:id', (req, res) => {
   }
 
   res.status(200).json({ status: 'success', data: { tour } });
-});
+};
 
-// Update Tour
-app.patch('/api/v1/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
   if (Number(req.params.id) > tours.length) {
     res.status(404).json({ status: 'Invalid ID' });
   }
 
   res.status(200).json({ status: 'success', data: { tour: 'PATCH' } });
-});
+};
 
-// Delete Tour
-app.delete('/api/v1/tours/:id', (req, res) => {
+const deleteTour = (req, res) => {
   if (Number(req.params.id) > tours.length) {
     res.status(404).json({ status: 'Invalid ID' });
   }
 
   res.status(204).json({ status: 'success', data: null });
-});
+};
 
+// Get All Tours
+app.get('/api/v1/tours', getALlTours);
+
+// Add New Tour
+app.post('/api/v1/tours', createTour);
+
+// Get Tour
+app.get('/api/v1/tours/:id', getTour);
+
+// Update Tour
+app.patch('/api/v1/tours/:id', updateTour);
+
+// Delete Tour
+app.delete('/api/v1/tours/:id', deleteTour);
+
+// Listening on port
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, function () {
   console.log(`Server listening on ${PORT}`);
