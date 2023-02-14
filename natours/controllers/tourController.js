@@ -36,19 +36,18 @@ const show = (req, res) => {
 };
 
 const update = (req, res) => {
-  if (Number(req.params.id) > tours.length) {
-    res.status(404).json({ status: 'Invalid ID' });
-  }
-
   res.status(200).json({ status: 'success', data: { tour: 'PATCH' } });
 };
 
 const destory = (req, res) => {
-  if (Number(req.params.id) > tours.length) {
+  res.status(204).json({ status: 'success', data: null });
+};
+
+const isValidId = function (_, res, next, val) {
+  if (Number(val) > tours.length) {
     res.status(404).json({ status: 'Invalid ID' });
   }
-
-  res.status(204).json({ status: 'success', data: null });
+  next();
 };
 
 module.exports = {
@@ -57,4 +56,5 @@ module.exports = {
   create,
   update,
   destory,
+  isValidId,
 };
