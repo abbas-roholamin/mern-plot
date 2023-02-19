@@ -1,11 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
 const app = express();
+require('dotenv').config({ path: './.env' });
+require('./database');
 const router = require('./routes/web');
-
-// Load environment variables
-dotenv.config({ path: './.env' });
 
 // Middlewares
 app.use(express.json());
