@@ -15,4 +15,4 @@ class DB {
   }
 }
 
-exports.modules = new DB(process.env.MONGODB_URI);
+exports.modules = new DB(process.env.MONGODB_URI_LOCAL);
