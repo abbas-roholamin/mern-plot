@@ -14,9 +14,15 @@ const index = async (req, res) => {
     );
 
     // Build Query
-    const quary = Tour.find(JSON.parse(queryString));
+    let quary = Tour.find(JSON.parse(queryString));
 
-    // Excute Quer
+    // Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      quary = quary.sort(sortBy);
+    }
+
+    // Excute Query
     const tours = await quary;
 
     // Send Response
