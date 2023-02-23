@@ -7,10 +7,16 @@ const index = async (req, res) => {
     const excludedFeilds = ['page', 'limit', 'sort', 'fields'];
     excludedFeilds.forEach((el) => delete quaryObj[el]);
 
-    // Build Query
-    const quary = Tour.find(quaryObj);
+    // Filtering
+    const queryString = JSON.stringify(quaryObj).replace(
+      /\b(gte|gt|lte|lt)\b/g,
+      (match) => `$${match}`
+    );
 
-    // Excute Query
+    // Build Query
+    const quary = Tour.find(JSON.parse(queryString));
+
+    // Excute Quer
     const tours = await quary;
 
     // Send Response
