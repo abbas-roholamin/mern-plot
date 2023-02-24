@@ -1,3 +1,4 @@
+const { query } = require('express');
 const { Tour } = require('../models/Tour');
 
 const index = async (req, res) => {
@@ -14,16 +15,26 @@ const index = async (req, res) => {
     );
 
     // Build Query
-    let quary = Tour.find(JSON.parse(queryString));
+    let query = Tour.find(JSON.parse(queryString));
 
     // Sorting
     if (req.query.sort) {
       const sortBy = req.query.sort.split(',').join(' ');
-      quary = quary.sort(sortBy);
+      query = query.sort(sortBy);
+    }
+
+    //Limiting Fields
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
+
     }
 
     // Excute Query
-    const tours = await quary;
+    const tours = await query;
 
     // Send Response
     res.status(200).json({
@@ -34,7 +45,7 @@ const index = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(404).json({ status: 'fail', message: 'ARROR!' });
+    res.status(404).json({ status: 'fail', message: JSON.stringify(error) });
   }
 };
 
