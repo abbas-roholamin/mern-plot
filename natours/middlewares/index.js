@@ -1,2 +1,2 @@
 exports.hasValidBody = require('./hasValidBody');
-exports.TopCheapTour = require('./TopCheapTours');
+exports.topCheapTours = require('./topCheapTours');
