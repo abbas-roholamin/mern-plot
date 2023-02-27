@@ -6,6 +6,7 @@ const tourController = require('./../controllers/tourController');
 const { hasValidBody, topCheapTours } = require('../middlewares');
 
 router.get('/top-5-cheap', topCheapTours, tourController.index);
+router.get('/tours-status', tourController.status);
 router.get('/', tourController.index);
 router.post('/', hasValidBody, tourController.create);
 router.get('/:id', tourController.show);
