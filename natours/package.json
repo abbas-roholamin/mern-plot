@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "test": "jest test"
+    "test": "jest test",
+    "debug": "ndb app.js"
   },
   "keywords": [
     "nodejs",
