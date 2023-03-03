@@ -1,8 +1,9 @@
 const { query } = require('express');
 const { Tour } = require('../models/Tour');
 const request = require('../utils/request');
+const Abort = require('../utils/Abort');
 
-const index = request(async (req, res) => {
+const index = request(async (req, res, next) => {
   // GET Query Params
   const quaryObj = { ...req.query };
   const excludedFeilds = ['page', 'limit', 'sort', 'fields'];
@@ -55,16 +56,20 @@ const index = request(async (req, res) => {
   });
 });
 
-const create = request(async (req, res) => {
+const create = request(async (req, res, next) => {
   const newTour = await Tour.create(req.body);
   res.status(201).json({ status: 'success', data: newTour });
 });
 
-const show = request(async (req, res) => {
+const show = request(async (req, res, next) => {
   const id = req.params.id;
 
   const tour = await Tour.findById(id);
   // Tour.findOne({ _id: id})
+
+  if (!tour) {
+    return next(new Abort('NOT FOUND!', 404));
+  }
 
   res.status(200).json({
     status: 'success',
@@ -74,7 +79,7 @@ const show = request(async (req, res) => {
   });
 });
 
-const update = request(async (req, res) => {
+const update = request(async (req, res, next) => {
   const id = req.params.id;
   const body = req.body;
 
@@ -82,6 +87,11 @@ const update = request(async (req, res) => {
     new: true,
     runValidators: true,
   });
+
+  if (!tour) {
+    return next(new Abort('NOT FOUND!', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -90,17 +100,22 @@ const update = request(async (req, res) => {
   });
 });
 
-const destory = request(async (req, res) => {
+const destory = request(async (req, res, next) => {
   const id = req.params.id;
 
-  await Tour.findByIdAndDelete(id);
+  const tour = await Tour.findByIdAndDelete(id);
+
+  if (!tour) {
+    return next(new Abort('NOT FOUND!', 404));
+  }
+
   res.status(204).json({
     status: 'success',
     data: null,
   });
 });
 
-const status = request(async (req, res) => {
+const status = request(async (req, res, next) => {
   const tours = await Tour.aggregate([
     {
       $match: { ratingsAverage: { $gte: 4.5 } },
