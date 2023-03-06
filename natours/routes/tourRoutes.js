@@ -2,16 +2,16 @@ const express = require('express');
 
 const router = express.Router();
 
-const tourController = require('./../controllers/tourController');
-const { hasValidBody, topCheapTours } = require('../middlewares');
+const TourController = require('../controllers/TourController');
+const { HasValidBody, TopCheapTours } = require('../middlewares');
 
-router.get('/top-5-cheap', topCheapTours, tourController.index);
-router.get('/tours-status', tourController.status);
-router.get('/monthly-plan/:year', tourController.monthlyPlan);
-router.get('/', tourController.index);
-router.post('/', hasValidBody, tourController.create);
-router.get('/:id', tourController.show);
-router.patch('/:id', tourController.update);
-router.delete('/:id', tourController.destory);
+router.get('/top-5-cheap', TopCheapTours, TourController.index);
+router.get('/tours-status', TourController.status);
+router.get('/monthly-plan/:year', TourController.monthlyPlan);
+router.get('/', TourController.index);
+router.post('/', HasValidBody, TourController.create);
+router.get('/:id', TourController.show);
+router.patch('/:id', TourController.update);
+router.delete('/:id', TourController.destory);
 
 module.exports = router;

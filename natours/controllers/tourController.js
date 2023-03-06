@@ -1,4 +1,3 @@
-const { query } = require('express');
 const { Tour } = require('../models/Tour');
 const request = require('../utils/request');
 const Abort = require('../utils/Abort');

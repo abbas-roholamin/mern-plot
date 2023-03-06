@@ -1,4 +1,4 @@
-const hasValidBody = (req, res, next) => {
+const HasValidBody = (req, res, next) => {
   if (!req.body.name || !req.body.price) {
     return res
       .status(400)
@@ -8,4 +8,4 @@ const hasValidBody = (req, res, next) => {
   next();
 };
 
-module.exports = hasValidBody;
+module.exports = HasValidBody;
