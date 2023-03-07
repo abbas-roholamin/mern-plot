@@ -41,4 +41,8 @@ schema.pre('save', async function (next) {
   next();
 });
 
+schema.methods.isMatch = async function (condidate, password) {
+  return await bcrypt.compare(condidate, password);
+};
+
 exports.User = mongoose.model('User', schema);
